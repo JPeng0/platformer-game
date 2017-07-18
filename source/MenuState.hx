@@ -3,7 +3,6 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
-//import flixel.FlxState;
 import flixel.input.touch.FlxTouch;
 import flixel.text.FlxText;
 import flixel.util.FlxGradient;

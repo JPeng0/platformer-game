@@ -33,9 +33,15 @@ class PlayState extends FlxState
 	// Just to prevent weirdness during level transition
 	private var _fading:Bool;
 
+	// Meta groups, to help speed up collisions
+	private var _objects:FlxGroup;
+
 	//HUD stuff
 	private var _healthBar:FlxBar;
 	private var _manaBar:FlxBar;
+
+	//backgrounds
+	private var _backgrounds:FlxTypedGroup<FlxSprite>;
 
 	override public function create():Void
 	{
@@ -56,6 +62,7 @@ class PlayState extends FlxState
 		FlxG.camera.setScrollBoundsRect(0, 0, 640, 640, true);
 		FlxG.camera.follow(_player, PLATFORMER);
 
+		add(_hud);
 		//HUD
 		_healthBar = new FlxBar(2, 2, FlxBarFillDirection.LEFT_TO_RIGHT, 90, 6, _sprPlayer, "health", 0, 10, true);
 		_healthBar.createGradientBar([0xcc111111], [0xffff0000, 0xff00ff00], 1, 0, true, 0xcc333333);
@@ -64,7 +71,23 @@ class PlayState extends FlxState
 		_manaBar = new FlxBar(2, 2, FlxBarFillDirection.LEFT_TO_RIGHT, 90, 6, _sprPlayer, "mana", 0, 10, true);
 		_manaBar.createGradientBar([0xcc111111], [0xffff0000, 0xff00ff00], 1, 0, true, 0xcc333333);
 		_manaBar.scrollFactor.set();
-		add(_healthBar);
+		_hud.add(_healthbar);
+		_hud.add(_manabar);
+
+		// With forEach() we can execute a function on every group member
+		_hud.forEach(function(s:FlxSprite)
+		{
+			// This makes sure the HUD does not move with the camera scroll
+			s.scrollFactor.set(0, 0);
+			// We only want out HUD to display on the main camera
+			s.cameras = [FlxG.camera];
+		});
+
+		//mobile
+
+		#if VIRTUAL_PAD
+		add(Player.virtualPad);
+		#end
 
 		super.create();
 	}
@@ -77,6 +100,18 @@ class PlayState extends FlxState
 					_starting = false;
 					openSubState(new MenuState());
 				}
+
+		// Escape to the main menu
+		#if FLX_KEYBOARD
+		if (FlxG.keys.pressed.ESCAPE)
+			FlxG.switchState(new MenuState());
+		#end		
+
+	}
+
+	private function loadMaps(): Void
+	{
+
 
 	}
 
