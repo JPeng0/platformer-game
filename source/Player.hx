@@ -247,3 +247,16 @@ class Player extends FlxSprite
 					}
 	}
 }
+
+@:enum abstract Animation(String) to String
+{
+	var IDLE = "idle";
+	var IDLE_UP = "idle_up";
+
+	var JUMP = "jump";
+	var JUMP_UP = "jump_up";
+	var JUMP_DOWN = "jump_down";
+
+	var RUN = "run";
+	var RUN_UP = "run_up";
+}

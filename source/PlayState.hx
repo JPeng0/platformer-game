@@ -18,21 +18,55 @@ using flixel.util.FlxSpriteUtil;
 
 class PlayState extends FlxState
 {
-	private var _player:Player;
+	public static inline var TILE_SIZE:Int = 8;
+	public static inline var MAP_WIDTH_IN_TILES:Int = 80;
+	public static inline var MAP_HEIGHT_IN_TILES:Int = 80;
+
+	private var _map:Array<Int>;
 	private var _map:FlxTilemap;
 	private var _starting:Bool = true;
 	private var _launchedSubstate:Bool = false;
+
+	//object storage
+	private var _player:Player;
+
+	// Just to prevent weirdness during level transition
+	private var _fading:Bool;
+
+	//HUD stuff
+	private var _healthBar:FlxBar;
+	private var _manaBar:FlxBar;
+
 	override public function create():Void
 	{
-		super.create();
-		
+		#if FLX_MOUSE
+		FlxG.mouse.visible = false;
+		#end
+
+		//Set up objects
+		_hud = new FlxSpriteGroup();
+
+		//background stuff
+
+
 		// Then we add the player and set up the scrolling camera,
 		// which will automatically set the boundaries of the world.
 		add(_player);
 		
 		FlxG.camera.setScrollBoundsRect(0, 0, 640, 640, true);
 		FlxG.camera.follow(_player, PLATFORMER);
-		
+
+		//HUD
+		_healthBar = new FlxBar(2, 2, FlxBarFillDirection.LEFT_TO_RIGHT, 90, 6, _sprPlayer, "health", 0, 10, true);
+		_healthBar.createGradientBar([0xcc111111], [0xffff0000, 0xff00ff00], 1, 0, true, 0xcc333333);
+		_healthBar.scrollFactor.set();
+		add(_healthBar);
+		_manaBar = new FlxBar(2, 2, FlxBarFillDirection.LEFT_TO_RIGHT, 90, 6, _sprPlayer, "mana", 0, 10, true);
+		_manaBar.createGradientBar([0xcc111111], [0xffff0000, 0xff00ff00], 1, 0, true, 0xcc333333);
+		_manaBar.scrollFactor.set();
+		add(_healthBar);
+
+		super.create();
 	}
 
 	override public function update(elapsed:Float):Void
@@ -44,78 +78,6 @@ class PlayState extends FlxState
 					openSubState(new MenuState());
 				}
 
-	}
-
-	//private function playerMovements():Void
-	//{
-
-	//}
-
-	private function playerMovement():Void
-	{
-		var v:Float = 0;
-		
-		#if android
-		var t:FlxTouch = FlxG.touches.getFirst();
-		
-		if (t!=null)
-		{
-			if (t.y < _player.y - (_player.height / 2))
-				v -= 120;
-			else if (t.y > _player.y + _player.height + (_player.height / 2))
-				v += 120;
-		}
-		#end
-		
-		#if FLX_KEYBOARD
-		if (FlxG.keys.anyPressed([UP, W]))
-			v -= 120;
-		if (FlxG.keys.anyPressed([DOWN, S]))
-			v += 120;
-		#end
-		
-		if (v < 0)
-			_player.animation.play("up");
-		else if (v > 0)
-			_player.animation.play("down");
-		else
-			_player.animation.play("normal");
-		_player.velocity.y = v;
-		v = _chaser.velocity.x;
-		
-		#if android
-		if (t!=null)
-		{
-			if (t.x < _player.x)
-				v -= 90;
-			else if (t.x > _player.x + _player.width)
-				v += 90;
-		}
-		#end
-		
-		#if FLX_KEYBOARD
-		if (FlxG.keys.anyPressed([LEFT, A]))
-			v -= 90;
-		if (FlxG.keys.anyPressed([RIGHT, D]))
-			v += 90;
-		#end
-		
-		_player.velocity.x = v;
-		
-		#if android
-		var t:FlxTouch = FlxG.touches.getFirst();
-		if (t != null && t.pressed)
-		{
-			shootPBullet();
-		}
-		#end
-		
-		#if FLX_KEYBOARD
-		if (FlxG.keys.anyPressed([SPACE, X]))
-		{
-			shootPBullet();
-		}
-		#end
 	}
 
 }
