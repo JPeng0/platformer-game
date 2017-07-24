@@ -1,0 +1,444 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"o",
+				"openSubState(...)	Void"
+			],
+			[
+				"assets",
+				"assets"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"marg",
+				"margin-right"
+			],
+			[
+				"font-",
+				"font-family"
+			],
+			[
+				"background-o",
+				"background-color"
+			],
+			[
+				"op",
+				"opacity"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"in",
+				"inline-block"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"padd",
+				"padding-top"
+			],
+			[
+				"pa",
+				"padding-right"
+			],
+			[
+				"padding",
+				"padding-bottom"
+			],
+			[
+				"bag",
+				"background-color"
+			],
+			[
+				"borderc",
+				"border-color"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"siz",
+				"font-size"
+			],
+			[
+				"list",
+				"list-style"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "source/PlayState.hx",
+			"settings":
+			{
+				"buffer_size": 2170,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/PBullet.hx",
+			"settings":
+			{
+				"buffer_size": 287,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/MenuState.hx",
+			"settings":
+			{
+				"buffer_size": 637,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "source/Player.hx",
+			"settings":
+			{
+				"buffer_size": 4961,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 150.0,
+		"selected_items":
+		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Add Repository"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 512.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/HaxeToolkit/haxe/lib/flixel-templates/2,4,3/default/source/PlayState.hx",
+		"/C/Users/Home/HelloWorld/source/PlayState.hx",
+		"/C/HaxeToolkit/haxe/lib/flixel-demos/2,4,0/Arcade/Flixius/source/PlayState.hx",
+		"/C/HaxeToolkit/haxe/lib/flixel-templates/2,4,3/ide-data/sublime-text/${PROJECT_NAME}.sublime-project.tpl",
+		"/C/Users/Home/AppData/Roaming/Sublime Text 2/Packages/HTML-CSS-JS Prettify/.jsbeautifyrc.defaults.json",
+		"/C/Users/Home/Documents/Portfolio/process.php",
+		"/C/Users/Home/Documents/Portfolio/js/util.js",
+		"/C/Users/Home/Documents/Portfolio/site.html",
+		"/C/Users/Home/Documents/Portfolio/js/format.js",
+		"/C/Users/Home/Documents/Portfolio/js/skel.min.js",
+		"/C/Users/Home/Documents/Portfolio/js/jquery.min.js",
+		"/C/Users/Home/Documents/GitHub/Portfolio/index.html",
+		"/C/Users/Home/Documents/Portfolio/css/main.css",
+		"/C/Users/Home/Documents/Portfolio/index.html",
+		"/C/Users/Home/Documents/Portfolio/js/jquery.dropotron.min.js",
+		"/C/Users/Home/Documents/Site/main.css",
+		"/C/Users/Home/Documents/Site/css/bootstrap.css",
+		"/C/Users/Home/Documents/Site/css/btns.css",
+		"/C/Users/Home/Documents/Site/Home.html",
+		"/C/Users/Home/Documents/Site/index.css",
+		"/C/Users/Home/Documents/Site/index.html",
+		"/C/Users/Home/Documents/Portfolio/new 2.html",
+		"/C/Users/Home/Documents/Portfolio/test.html",
+		"/C/Users/Home/Documents/ddd",
+		"/C/Users/Home/Documents/Portfolio/tutorial",
+		"/C/Users/Home/Documents/index.html",
+		"/C/Users/Home/Documents/Portfolio/d/dimension/f/test.html",
+		"/C/Users/Home/Documents/CV - Copy/pixelarity.com/items/demos/dimension/f/test.html",
+		"/C/Users/Home/Documents/CV/pixelarity.com/items/demos/dimension/test.html",
+		"/C/Users/Home/Desktop/btns/index.html",
+		"/C/Users/Home/Documents/CV/Site example/pixelarity.com/items/demos/dimension/dark/index.html",
+		"/C/Users/Home/Documents/CV/Site example/pixelarity.com/items/demos/dimension/dark/test.html",
+		"/C/Users/Home/Documents/CV/Site example/pixelarity.com/items/demos/dimension/dark/assets/js/util.js",
+		"/C/Users/Home/Documents/CV/Site example/pixelarity.com/items/demos_assets/skel.min.js",
+		"/C/Users/Home/Documents/CV/Site example/pixelarity.com/items/demos_assets/jquery.min.js",
+		"/C/Users/Home/Documents/Dimension.html",
+		"/C/Users/Home/Documents/main.css",
+		"/C/Users/Home/Documents/main.js",
+		"/C/Users/Home/Documents/libs.js",
+		"/C/Users/Home/Documents/Site example/index.html",
+		"/C/Users/Home/.atom/storage/application.json",
+		"/C/Users/Home/Documents/Site/btns/index.html",
+		"/C/Users/Home/MyProject/Source/Main.hx",
+		"/C/Users/Home/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/Home/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/C/Users/Home/MyProject/MyProject.hxproj"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"sprPlayer",
+			"player",
+			"#",
+			"submit",
+			"image",
+			"article",
+			"//",
+			"background-image",
+			"bg",
+			"icon",
+			"fa-",
+			"twitter",
+			"article",
+			"is-article-visible",
+			"background-image",
+			"bg",
+			"bg2",
+			"svg",
+			"images",
+			"background-image",
+			"close",
+			"background-image",
+			"center",
+			"is-load",
+			"display: none",
+			"style",
+			"src",
+			"about",
+			"dimension",
+			")\n",
+			"color",
+			"mega trac"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"player"
+		],
+		"reverse": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "source/PlayState.hx",
+					"settings":
+					{
+						"buffer_size": 2170,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								198,
+								198
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "source/PBullet.hx",
+					"settings":
+					{
+						"buffer_size": 287,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								282,
+								282
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "source/MenuState.hx",
+					"settings":
+					{
+						"buffer_size": 637,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								301,
+								301
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "source/Player.hx",
+					"settings":
+					{
+						"buffer_size": 4961,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1909,
+								1909
+							]
+						],
+						"settings":
+						{
+							"haxe-build-id": 0,
+							"syntax": "Packages/Haxe/Haxe.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1938.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
