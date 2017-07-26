@@ -1,20 +1,49 @@
 package;
 
+import flixel.effects.particles.FlxEmitter;
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.input.gamepad.FlxGamepad;
+import flixel.util.FlxSpriteUtil;
 import flixel.util.FlxColor;
+
+#if VIRTUAL_PAD
+import flixel.ui.FlxVirtualPad;
+import flixel.util.FlxDestroyUtil;
+#end
 
 class Player extends FlxSprite
 {
 	public var dying:Bool = false;
+
+	#if VIRTUAL_PAD
+	public static var virtualPad:FlxVirtualPad;
+	#end
+
+	//static vars
+	public static inline var RUN_SPEED:Int = 90;
+	public static inline var GRAVITY:Int = 620;
+	public static inline var JUMP_SPEED:Int = 250;
+	public static inline var JUMPS_ALLOWED:Int = 2;
+	public static inline var BULLET_SPEED:Int = 200;
+	public static inline var GUN_DELAY:Float = 0.1;
+
 	private var _dyingTimer:Float = 2;
 	private var _deathCallback:FlxSprite->Void;
-	
-	public function new(X:Int, Y:Int, DeathCallback:FlxSprite->Void) 
+	private var _cooldown:Float;
+	private var _aim:Int = FlxObject.RIGHT;
+	//private var _bullets:FlxTypedGroup<Bullet>;
+	public var flickering:Bool = false;
+	private var _jumpPower:Int = 200;
+	private var _gibs:FlxEmitter;
+
+	public function new(X:Int, Y:Int) 
 	{
 		super(X, Y);
 		
-		loadGraphic(AssetPaths.spaceman__png, true, 8);
+		loadGraphic("assets/images/player.png", true, 8);
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
@@ -25,24 +54,24 @@ class Player extends FlxSprite
 		offset.set(1, 1);
 		
 		// Basic player physics
-		var runSpeed:Int = 80;
-		drag.x = runSpeed * 8;
-		acceleration.y = 420;
-		maxVelocity.set(runSpeed, _jumpPower);
-		
+		drag.set(RUN_SPEED * 8, RUN_SPEED * 8);
+		maxVelocity.set(RUN_SPEED, JUMP_SPEED);
+		acceleration.y = GRAVITY;
+		_cooldown = GUN_DELAY; 
+
 		// Animations
-		animation.add(Animation.IDLE, [0]);
+		animation.add(Animation.IDLE, [0,1,2,3]);
 		animation.add(Animation.IDLE_UP, [5]);
 
-		animation.add(Animation.RUN, [1, 2, 3, 0], 12);
-		animation.add(Animation.RUN_UP, [6, 7, 8, 5], 12);
+		animation.add(Animation.RUN, [0, 5, 6, 7], 12);
+		//animation.add(Animation.RUN_UP, [6, 7, 8, 5], 12);
 		
 		animation.add(Animation.JUMP, [4]);
-		animation.add(Animation.JUMP_UP, [9]);
-		animation.add(Animation.JUMP_DOWN, [10]);
+		//animation.add(Animation.JUMP_UP, [9]);
+		//animation.add(Animation.JUMP_DOWN, [10]);
 		
 		// Bullet stuff
-		_bullets = Bullets;
+		//_bullets = Bullets;
 		
 		
 		#if VIRTUAL_PAD
@@ -50,7 +79,7 @@ class Player extends FlxSprite
 		virtualPad.alpha = 0.5;
 		#end
 		health = 10;
-		_deathCallback = DeathCallback;
+		//_deathCallback = DeathCallback;
 	}
 	
 	override public function kill():Void 
@@ -59,20 +88,22 @@ class Player extends FlxSprite
 		dying = true;
 		_dyingTimer = 1;
 		
-		_deathCallback(this);
+		//_deathCallback(this);
 		FlxG.camera.shake(.05, .2);
 		FlxG.camera.flash(FlxColor.WHITE, .1);
 	}
 	
 	override public function update(elapsed:Float):Void 
 	{
+		super.update(elapsed);
+
 		acceleration.x = 0;
 		
 		updateKeyboardInput();
 		updateGamepadInput();
 		updateVirtualPadInput();
-		
 		updateAnimations();
+
 		if (dying)
 		{
 			if (_dyingTimer > 0)
@@ -86,7 +117,7 @@ class Player extends FlxSprite
 				exists = false;
 			}
 		}
-		super.update(elapsed);
+		
 	}
 
 	private function updateKeyboardInput():Void
@@ -104,8 +135,8 @@ class Player extends FlxSprite
 		
 		if (FlxG.keys.pressed.X)
 			jump();
-		if (FlxG.keys.pressed.C)
-			shoot();
+		if (FlxG.keys.pressed.Z)
+			return;
 		#end
 	}
 	
@@ -150,7 +181,7 @@ class Player extends FlxSprite
 			jump();
 		
 		if (gamepad.pressed.X)
-			shoot();
+			return;
 		#end
 	}
 	
@@ -158,13 +189,7 @@ class Player extends FlxSprite
 	{
 		if (velocity.y != 0)
 		{
-			animation.play(switch (_aim)
-			{
-				case FlxObject.UP: Animation.JUMP_UP;
-				case FlxObject.DOWN: Animation.JUMP_DOWN;
-				default: Animation.JUMP;
-
-			});
+			animation.play(Animation.JUMP);
 		}
 		else if (velocity.x == 0)
 		{
@@ -172,7 +197,7 @@ class Player extends FlxSprite
 		}
 		else
 		{
-			animation.play(if (_aim == FlxObject.UP) Animation.RUN_UP else Animation.RUN);
+			animation.play(Animation.RUN);
 		}
 	}
 	
@@ -206,7 +231,7 @@ class Player extends FlxSprite
 		flickering = true;
 	}
 
-	unction moveLeft():Void
+	function moveLeft():Void
 	{
 		facing = _aim = FlxObject.LEFT;
 		acceleration.x -= drag.x;
@@ -230,13 +255,13 @@ class Player extends FlxSprite
 	
 	function jump():Void
 	{
-		if (isReadyToJump && (velocity.y == 0))
+		if (velocity.y == 0)
 		{
 			velocity.y = -_jumpPower;
 			FlxG.sound.play("Jump");
 		}
 	}
-	function shoot():Void
+	/*function shoot():Void
 	{
 		getMidpoint(_point);
 					_bullets.recycle(Bullet.new).shoot(_point, _aim);
@@ -245,7 +270,7 @@ class Player extends FlxSprite
 					{
 						velocity.y -= 36;
 					}
-	}
+	}*/
 }
 
 @:enum abstract Animation(String) to String
