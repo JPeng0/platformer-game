@@ -39,31 +39,31 @@ class Player extends FlxSprite
 	private var _jumpPower:Int = 200;
 	private var _gibs:FlxEmitter;
 
-	public function new(X:Int, Y:Int) 
+	public function new(X:Int,Y:Int) 
 	{
-		super(X, Y);
+		super(X,Y);
 		
-		loadGraphic("assets/images/player.png", true, 8);
+		loadGraphic("assets/images/player.png", true);
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
 		
 		// Bounding box tweaks
-		width = 6;
-		height = 7;
-		offset.set(1, 1);
+		//width = 6;
+		//height = 7;
+		//offset.set(1, 1);
 		
 		// Basic player physics
 		drag.set(RUN_SPEED * 8, RUN_SPEED * 8);
 		maxVelocity.set(RUN_SPEED, JUMP_SPEED);
 		acceleration.y = GRAVITY;
-		_cooldown = GUN_DELAY; 
+		//_cooldown = GUN_DELAY; 
 
 		// Animations
 		animation.add(Animation.IDLE, [0,1,2,3]);
 		animation.add(Animation.IDLE_UP, [5]);
 
-		animation.add(Animation.RUN, [0, 5, 6, 7], 12);
+		animation.add(Animation.RUN, [0, 5, 6, 7], 12, true);
 		//animation.add(Animation.RUN_UP, [6, 7, 8, 5], 12);
 		
 		animation.add(Animation.JUMP, [4]);
@@ -98,6 +98,7 @@ class Player extends FlxSprite
 		super.update(elapsed);
 
 		acceleration.x = 0;
+		acceleration.y = GRAVITY;
 		
 		updateKeyboardInput();
 		updateGamepadInput();
@@ -208,7 +209,7 @@ class Player extends FlxSprite
 		if (flickering)
 			return;
 		
-		FlxG.sound.play("Hurt");
+		FlxG.sound.play("assets/sounds/hurt");
 		
 		flicker(1.3);
 		 
@@ -258,7 +259,7 @@ class Player extends FlxSprite
 		if (velocity.y == 0)
 		{
 			velocity.y = -_jumpPower;
-			FlxG.sound.play("Jump");
+			FlxG.sound.play("assets/sounds/jump");
 		}
 	}
 	/*function shoot():Void

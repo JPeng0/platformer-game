@@ -1,7 +1,7 @@
 import flixel.util.FlxSpriteUtil;
 /**
- * ...
- * @author David Bell
+ * 
+ * 
  */
 class Enemy extends FlxSprite
 {

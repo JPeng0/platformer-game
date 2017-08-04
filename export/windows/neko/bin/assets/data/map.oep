@@ -39,7 +39,7 @@
       <ExportMode>CSV</ExportMode>
     </LayerDefinition>
     <LayerDefinition xsi:type="EntityLayerDefinition">
-      <Name>entitiies</Name>
+      <Name>entities</Name>
       <Grid>
         <Width>16</Width>
         <Height>16</Height>
