@@ -1,4 +1,4 @@
-package;
+package; 
 
 import flixel.effects.particles.FlxEmitter;
 import flixel.FlxG;
@@ -16,6 +16,7 @@ import flixel.util.FlxDestroyUtil;
 
 class Player extends FlxSprite
 {
+
 	public var dying:Bool = false;
 
 	#if VIRTUAL_PAD
@@ -39,9 +40,9 @@ class Player extends FlxSprite
 	private var _jumpPower:Int = 200;
 	private var _gibs:FlxEmitter;
 
-	public function new(X:Int,Y:Int) 
+	public function new(X:Float, Y:Float)
 	{
-		super(X,Y);
+		super(X, Y);
 		
 		loadGraphic("assets/images/player.png", true);
 		
@@ -73,15 +74,15 @@ class Player extends FlxSprite
 		// Bullet stuff
 		//_bullets = Bullets;
 		
-		
 		#if VIRTUAL_PAD
 		virtualPad = new FlxVirtualPad(FULL, A_B);
 		virtualPad.alpha = 0.5;
 		#end
+
 		health = 10;
 		//_deathCallback = DeathCallback;
 	}
-	
+
 	override public function kill():Void 
 	{
 		health = 0;
@@ -92,11 +93,10 @@ class Player extends FlxSprite
 		FlxG.camera.shake(.05, .2);
 		FlxG.camera.flash(FlxColor.WHITE, .1);
 	}
-	
-	override public function update(elapsed:Float):Void 
-	{
-		super.update(elapsed);
 
+	override public function update(elapsed:Float):Void
+	{
+		// Smooth slidey walking controls
 		acceleration.x = 0;
 		acceleration.y = GRAVITY;
 		
@@ -104,7 +104,7 @@ class Player extends FlxSprite
 		updateGamepadInput();
 		updateVirtualPadInput();
 		updateAnimations();
-
+		
 		if (dying)
 		{
 			if (_dyingTimer > 0)
@@ -119,6 +119,37 @@ class Player extends FlxSprite
 			}
 		}
 		
+		super.update(elapsed);
+	}
+
+	override public function hurt(Damage:Float):Void
+	{
+		Damage = 0;
+		
+		if (flickering)
+			return;
+		
+		FlxG.sound.play("assets/sounds/hurt");
+		
+		flicker(1.3);
+		 
+		health -= 1;
+		
+		if (velocity.x > 0)
+			velocity.x = -maxVelocity.x;
+		else
+			velocity.x = maxVelocity.x;
+		
+		super.hurt(Damage);
+	}
+	
+	private function flicker(Duration:Float):Void
+	{
+		FlxSpriteUtil.flicker(this, Duration, 0.02, true, true, function(_)
+		{
+			flickering = false;
+		});
+		flickering = true;
 	}
 
 	private function updateKeyboardInput():Void
@@ -129,12 +160,12 @@ class Player extends FlxSprite
 		else if (FlxG.keys.anyPressed([D, RIGHT]))
 			moveRight();
 		
-		if (FlxG.keys.anyPressed([W, UP]))
-			moveUp();
+		//if (FlxG.keys.anyPressed([W, UP]))
+			//moveUp();
 		else if (FlxG.keys.anyPressed([S, DOWN]))
 			moveDown();
 		
-		if (FlxG.keys.pressed.X)
+		if (FlxG.keys.anyPressed([W, UP]))
 			jump();
 		if (FlxG.keys.pressed.Z)
 			return;
@@ -202,36 +233,6 @@ class Player extends FlxSprite
 		}
 	}
 	
-	override public function hurt(Damage:Float):Void
-	{
-		Damage = 0;
-		
-		if (flickering)
-			return;
-		
-		FlxG.sound.play("assets/sounds/hurt");
-		
-		flicker(1.3);
-		 
-		health -= 1;
-		
-		if (velocity.x > 0)
-			velocity.x = -maxVelocity.x;
-		else
-			velocity.x = maxVelocity.x;
-		
-		super.hurt(Damage);
-	}
-	
-	private function flicker(Duration:Float):Void
-	{
-		FlxSpriteUtil.flicker(this, Duration, 0.02, true, true, function(_)
-		{
-			flickering = false;
-		});
-		flickering = true;
-	}
-
 	function moveLeft():Void
 	{
 		facing = _aim = FlxObject.LEFT;
@@ -259,20 +260,11 @@ class Player extends FlxSprite
 		if (velocity.y == 0)
 		{
 			velocity.y = -_jumpPower;
-			FlxG.sound.play("assets/sounds/jump");
+			//FlxG.sound.play("assets/sounds/jump");
 		}
 	}
-	/*function shoot():Void
-	{
-		getMidpoint(_point);
-					_bullets.recycle(Bullet.new).shoot(_point, _aim);
-					
-					if (_aim == FlxObject.DOWN)
-					{
-						velocity.y -= 36;
-					}
-	}*/
 }
+
 
 @:enum abstract Animation(String) to String
 {

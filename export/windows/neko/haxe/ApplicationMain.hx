@@ -26,7 +26,7 @@ class ApplicationMain {
 	
 	public static function main () {
 		
-		flash.Lib.setPackage ("HaxeFlixel", "HelloWorld", "com.example.myapp", "0.0.1");
+		flash.Lib.setPackage ("HaxeFlixel", "TempProject", "com.example.myapp", "0.0.1");
 		
 		
 		#if ios
@@ -40,7 +40,7 @@ class ApplicationMain {
 		telemetryConfig = new hxtelemetry.HxTelemetry.Config ();
 		telemetryConfig.allocations = true;
 		telemetryConfig.host = "localhost";
-		telemetryConfig.app_name = "HelloWorld";
+		telemetryConfig.app_name = "TempProject";
 		#end
 		
 		
@@ -141,7 +141,7 @@ class ApplicationMain {
 			(false ? flash.Lib.FULLSCREEN : 0) |
 			(0 == 4 ? flash.Lib.HW_AA_HIRES : 0) |
 			(0 == 2 ? flash.Lib.HW_AA : 0),
-			"HelloWorld",
+			"TempProject",
 			null
 			#if mobile, ScaledStage #end
 		);
@@ -318,14 +318,14 @@ class ApplicationMain {
 	public static function main () {
 		
 		#if openfl
-		flash.Lib.setPackage ("HaxeFlixel", "HelloWorld", "com.example.myapp", "0.0.1");
+		flash.Lib.setPackage ("HaxeFlixel", "TempProject", "com.example.myapp", "0.0.1");
 		
 		#end
 		
 		wx.App.boot (function () {
 			
 			
-			frame = wx.Frame.create (null, null, "HelloWorld", null, { width: 640, height: 480 });
+			frame = wx.Frame.create (null, null, "TempProject", null, { width: 640, height: 480 });
 			
 			
 			#if openfl
@@ -455,6 +455,126 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("flixel/flixel-ui/img/box.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/button.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/button_arrow_down.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/button_arrow_left.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/button_arrow_right.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/button_arrow_up.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/button_thin.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/button_toggle.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/check_box.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/check_mark.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/chrome.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/chrome_flat.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/chrome_inset.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/chrome_light.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/dropdown_mark.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/finger_big.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/finger_small.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/hilight.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/invis.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/minus_mark.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/plus_mark.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/radio.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/radio_dot.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/swatch.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/tab.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/tab_back.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/img/tooltip_arrow.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("flixel/flixel-ui/xml/defaults.xml");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("flixel/flixel-ui/xml/default_loading_screen.xml");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
+		urls.push ("flixel/flixel-ui/xml/default_popup.xml");
+		types.push (lime.Assets.AssetType.TEXT);
+		
+		
 		
 		if (config.assetsPrefix != null) {
 			
@@ -515,11 +635,11 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "87",
+			build: "79",
 			company: "HaxeFlixel",
-			file: "HelloWorld",
+			file: "TempProject",
 			fps: 60,
-			name: "HelloWorld",
+			name: "TempProject",
 			orientation: "landscape",
 			packageName: "com.example.myapp",
 			version: "0.0.1",
@@ -537,7 +657,7 @@ class ApplicationMain {
 					parameters: "{}",
 					resizable: true,
 					stencilBuffer: false,
-					title: "HelloWorld",
+					title: "TempProject",
 					vsync: true,
 					width: 640,
 					x: null,

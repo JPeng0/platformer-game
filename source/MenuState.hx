@@ -13,7 +13,7 @@ using flixel.util.FlxSpriteUtil;
 
 class MenuState extends FlxState
 {
-	private var _btnPlay:FlxButton;
+	
 	override public function create():Void
 	{
 		#if FLX_MOUSE
@@ -22,9 +22,9 @@ class MenuState extends FlxState
 
 		FlxG.state.bgColor = 0xFF101414;
 
-		_btnPlay = new FlxButton(0,0,"Play");
-		add(_btnPlay);
-		_btnPlay.screenCenter();
+		var text:FlxText = new FlxText("X to Play");
+		add(text);
+		text.screenCenter();
 		super.create();
 	}
 

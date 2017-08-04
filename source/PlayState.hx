@@ -1,6 +1,5 @@
 package;
 
-import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.FlxCamera.FlxCameraFollowStyle;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -55,50 +54,35 @@ class PlayState extends FlxState
 		#if FLX_MOUSE
 		FlxG.mouse.visible = false;
 		#end
+		
+		// Background
+		FlxG.state.bgColor = 0xffacbcd7;
+		var decoration:FlxSprite = new FlxSprite(256, 159, "assets/images/bg.png");
+		decoration.moves = false;
+		decoration.solid = false;
+		add(decoration);
+		
+		var sprite:FlxSprite;
+		var destination:FlxPoint;
+		
+		
+		// Then add the player, its own class with its own logic
+		var player:Player = new Player(32, 100);
+		add(player);
+		
+		FlxG.camera.setScrollBoundsRect(0, 0, 640, 480, true);
+		FlxG.camera.follow(player, PLATFORMER);
+		
+		// Basic level structure
+		_map = new FlxTilemap();
+		_map.loadMapFromCSV("assets/data/level1.csv", "assets/images/tiles.png", 16, 16);
+		_map.follow();
+		add(_map);
 
 		//Set up objects
 		_hud = new FlxSpriteGroup();
 
-		//background stuff
-		FlxG.state.bgColor = 0xffacbcd7;
-		_backgrounds = new FlxTypedGroup<FlxSprite>();
-		//_backgrounds.moves = false;
-		//_backgrounds.solid = false;
-		/*_map = new FlxOgmoLoader("assets/data/level1.oel");
-		_mWalls = _map.loadTilemap("assets/images/tiles.png", 16, 16, "walls");
-		_mWalls.follow();
-		_mWalls.setTileProperties(FlxObject.ANY);
-		add(_mWalls);
-		*/
-		add(_backgrounds);
-
-		//map stuff
-		_map = new FlxTilemap();
-		_map.allowCollisions = FlxObject.ANY;
-		add(_map.loadMapFromCSV("assets/data/level1.csv", "assets/images/tiles.png", 16, 16));
-		
-		// Then we add the player and set up the scrolling camera,
-		// which will automatically set the boundaries of the world.
-		_player = new Player(32,100);
- 		//_map.loadEntities(placeEntities, "entities");
-		add(_player);
-
-		FlxG.camera.setScrollBoundsRect(0, 0, 640, 480, true);
-		FlxG.camera.follow(_player, PLATFORMER);
-
 		add(_hud);
-		//HUD
-		_healthBar = new FlxBar(2, 2, FlxBarFillDirection.LEFT_TO_RIGHT, 90, 6, _player, "health", 0, 10, true);
-		_healthBar.createGradientBar([0xcc111111], [0xffff0000, 0xff00ff00], 1, 0, true, 0xcc333333);
-		_healthBar.scrollFactor.set();
-		//add(_healthBar);
-		_manaBar = new FlxBar(2, 2, FlxBarFillDirection.LEFT_TO_RIGHT, 90, 6, _player, "mana", 0, 10, true);
-		_manaBar.createGradientBar([0xcc111111], [0xffff0000, 0xff00ff00], 2, 0, true, 0xcc333333);
-		_manaBar.scrollFactor.set();
-		_hud.add(_healthBar);
-		_hud.add(_manaBar);
-
-		// With forEach() we can execute a function on every group member
 		_hud.forEach(function(s:FlxSprite)
 		{
 			// This makes sure the HUD does not move with the camera scroll
@@ -107,20 +91,16 @@ class PlayState extends FlxState
 			s.cameras = [FlxG.camera];
 		});
 
-		//mobile
-
 		#if VIRTUAL_PAD
 		add(Player.virtualPad);
 		#end
-
-		super.create();
+		
 	}
-
 	
-
 	override public function update(elapsed:Float):Void
 	{
-		super.update(elapsed);
+		FlxG.collide();
+
 		/*if (_starting)
 		{
 			if (!_launchedSubstate)
@@ -130,31 +110,13 @@ class PlayState extends FlxState
 				FlxG.switchState(new PlayState());
 			}
 		}
-*/
+		*/
 		// Escape to the main menu
 		#if FLX_KEYBOARD
 		if (FlxG.keys.pressed.ESCAPE)
 			FlxG.switchState(new MenuState());
 		#end		
 
-		//collisions
-		FlxG.collide(_player, _map);
+		super.update(elapsed);
 	}
-
-	//private function loadMaps(): Void
-	//{
-
-
-	//}
-
-	private function placeEntities(entityName:String, entityData:Xml):Void
- 	{
-	     var x:Int = Std.parseInt(entityData.get("x"));
-	     var y:Int = Std.parseInt(entityData.get("y"));
-	     if (entityName == "player")
-	     {
-	         _player.x = x;
-	         _player.y = y;
-	     }
- 	}	
-}	
+}
