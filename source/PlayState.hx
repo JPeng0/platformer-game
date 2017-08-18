@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxCamera.FlxCameraFollowStyle;
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -27,6 +28,8 @@ class PlayState extends FlxState
 
 
 	private var _map:FlxTilemap;
+	private var _deco:FlxTilemap;
+	private var _bg:FlxTilemap;
  	//private var _mWalls:FlxTilemap;
 	private var _starting:Bool = true;
 	private var _launchedSubstate:Bool = false;
@@ -56,28 +59,33 @@ class PlayState extends FlxState
 		#end
 		
 		// Background
-		FlxG.state.bgColor = 0xffacbcd7;
-		var decoration:FlxSprite = new FlxSprite(256, 159, "assets/images/bg.png");
-		decoration.moves = false;
-		decoration.solid = false;
-		add(decoration);
+		FlxG.state.bgColor = 0xff80e5ff;
+		_bg = new FlxTilemap();
+		_bg.loadMapFromCSV("assets/data/map_bg.csv", "assets/images/Sky2.png", 16, 16);
+		_bg.follow();
+		//_bg.scrollFactor.x = _bg.scrollFactor.y = .5;
+		//_bg.moves = false;
+		//_bg.solid = false;
+		add(_bg);
 		
 		var sprite:FlxSprite;
 		var destination:FlxPoint;
 		
 		
-		// Then add the player, its own class with its own logic
-		var player:Player = new Player(32, 100);
-		add(player);
+
 		
-		FlxG.camera.setScrollBoundsRect(0, 0, 640, 480, true);
-		FlxG.camera.follow(player, PLATFORMER);
 		
-		// Basic level structure
+		
+		//room structures
+		//hometown
 		_map = new FlxTilemap();
-		_map.loadMapFromCSV("assets/data/level1.csv", "assets/images/tiles.png", 16, 16);
+		_map.loadMapFromCSV("assets/data/map.csv", "assets/images/tiles.png", 16, 16);
 		_map.follow();
 		add(_map);
+		_deco = new FlxTilemap();
+		_deco.loadMapFromCSV("assets/data/map_deco.csv", "assets/images/tile2.png", 16, 16);
+		_deco.follow();
+		add(_deco);
 
 		//Set up objects
 		_hud = new FlxSpriteGroup();
@@ -90,7 +98,17 @@ class PlayState extends FlxState
 			// We only want out HUD to display on the main camera
 			s.cameras = [FlxG.camera];
 		});
+		
+		// Then add the player, its own class with its own logic
+		_player = new Player(1504, 2600);
+		add(_player);
 
+		FlxG.camera.setScrollBoundsRect(0, 0, _map.width, _map.height);
+		FlxG.camera.follow(_player, PLATFORMER, .5); 
+		FlxG.camera.zoom = 1.2;
+		//FlxG.camera.targetOffset.set(0, )
+		//FlxG.camera.antialiasing = true;
+		
 		#if VIRTUAL_PAD
 		add(Player.virtualPad);
 		#end
@@ -99,7 +117,7 @@ class PlayState extends FlxState
 	
 	override public function update(elapsed:Float):Void
 	{
-		FlxG.collide();
+		FlxG.collide(_player, _map);
 
 		/*if (_starting)
 		{
@@ -109,8 +127,8 @@ class PlayState extends FlxState
 				_starting = false;
 				FlxG.switchState(new PlayState());
 			}
-		}
-		*/
+		}*/
+		
 		// Escape to the main menu
 		#if FLX_KEYBOARD
 		if (FlxG.keys.pressed.ESCAPE)

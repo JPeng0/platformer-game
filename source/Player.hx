@@ -37,14 +37,16 @@ class Player extends FlxSprite
 	private var _aim:Int = FlxObject.RIGHT;
 	//private var _bullets:FlxTypedGroup<Bullet>;
 	public var flickering:Bool = false;
-	private var _jumpPower:Int = 200;
+	private var _jumpPower:Int = 800;
+	private var _jumpTimes:Int = 1;
 	private var _gibs:FlxEmitter;
+	private var i:Int = 1;
 
 	public function new(X:Float, Y:Float)
 	{
 		super(X, Y);
 		
-		loadGraphic("assets/images/player.png", true);
+		loadGraphic("assets/images/player1.png", true, 15, 24);
 		
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
@@ -61,13 +63,13 @@ class Player extends FlxSprite
 		//_cooldown = GUN_DELAY; 
 
 		// Animations
-		animation.add(Animation.IDLE, [0,1,2,3]);
+		animation.add(Animation.IDLE, [0,1,2,3], 3, true);
 		animation.add(Animation.IDLE_UP, [5]);
 
-		animation.add(Animation.RUN, [0, 5, 6, 7], 12, true);
+		animation.add(Animation.RUN, [4, 5], 8, true);
 		//animation.add(Animation.RUN_UP, [6, 7, 8, 5], 12);
 		
-		animation.add(Animation.JUMP, [4]);
+		animation.add(Animation.JUMP, [5]);
 		//animation.add(Animation.JUMP_UP, [9]);
 		//animation.add(Animation.JUMP_DOWN, [10]);
 		
@@ -99,12 +101,15 @@ class Player extends FlxSprite
 		// Smooth slidey walking controls
 		acceleration.x = 0;
 		acceleration.y = GRAVITY;
+		if (velocity.y == 0)
+			i = 1;
 		
 		updateKeyboardInput();
 		updateGamepadInput();
 		updateVirtualPadInput();
 		updateAnimations();
-		
+		FlxG.log.advanced(i);
+
 		if (dying)
 		{
 			if (_dyingTimer > 0)
@@ -142,7 +147,10 @@ class Player extends FlxSprite
 		
 		super.hurt(Damage);
 	}
-	
+	public function setJumps(times:Int)
+	{
+		_jumpTimes = times;
+	}
 	private function flicker(Duration:Float):Void
 	{
 		FlxSpriteUtil.flicker(this, Duration, 0.02, true, true, function(_)
@@ -165,8 +173,11 @@ class Player extends FlxSprite
 		else if (FlxG.keys.anyPressed([S, DOWN]))
 			moveDown();
 		
-		if (FlxG.keys.anyPressed([W, UP]))
-			jump();
+		if (FlxG.keys.anyJustPressed([W, UP]))
+			{ 
+				jump();
+				i++;
+			}
 		if (FlxG.keys.pressed.Z)
 			return;
 		#end
@@ -257,11 +268,9 @@ class Player extends FlxSprite
 	
 	function jump():Void
 	{
-		if (velocity.y == 0)
-		{
+		if (i <= _jumpTimes)
 			velocity.y = -_jumpPower;
-			//FlxG.sound.play("assets/sounds/jump");
-		}
+			FlxG.sound.play("assets/sounds/jump");
 	}
 }
 
