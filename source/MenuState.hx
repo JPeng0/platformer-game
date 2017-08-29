@@ -13,7 +13,7 @@ using flixel.util.FlxSpriteUtil;
 
 class MenuState extends FlxState
 {
-	
+
 	override public function create():Void
 	{
 		#if FLX_MOUSE

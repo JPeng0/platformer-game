@@ -36,11 +36,11 @@ class Enemy extends FlxSprite
 		_playdeathsound = true;
 		_cooldown = 0;
 		
-		loadGraphic("assets/art/lurkmonsta.png", true, 16, 17);
+		loadGraphic("assets/images/monster.png", true, 16, 17);
 		
-		animation.add("walking", [0, 1], 18, true);
-		animation.add("wrecked", [4, 5], 18, true);
-		animation.add("idle", [0]);
+		animation.add("walking", [0, 1, 2, 3], 18, true);
+		//animation.add("wrecked", [4, 5], 18, true);
+		animation.add("idle", [4,5,6]), 3, true;
 		drag.x = Speed * 9;
 		drag.y = JumpSpeed * 7;
 		acceleration.y = Gravity;

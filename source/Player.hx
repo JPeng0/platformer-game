@@ -24,7 +24,7 @@ class Player extends FlxSprite
 	#end
 
 	//static vars
-	public static inline var RUN_SPEED:Int = 90;
+	public static inline var RUN_SPEED:Int = 200;
 	public static inline var GRAVITY:Int = 620;
 	public static inline var JUMP_SPEED:Int = 250;
 	public static inline var JUMPS_ALLOWED:Int = 2;
@@ -37,8 +37,8 @@ class Player extends FlxSprite
 	private var _aim:Int = FlxObject.RIGHT;
 	//private var _bullets:FlxTypedGroup<Bullet>;
 	public var flickering:Bool = false;
-	private var _jumpPower:Int = 800;
-	private var _jumpTimes:Int = 1;
+	private var _jumpPower:Int = 1600;
+	private var _jumpTimes:Int = 10;
 	private var _gibs:FlxEmitter;
 	private var i:Int = 1;
 
@@ -270,7 +270,7 @@ class Player extends FlxSprite
 	{
 		if (i <= _jumpTimes)
 			velocity.y = -_jumpPower;
-			FlxG.sound.play("assets/sounds/jump");
+			//FlxG.sound.play("assets/sounds/jump");
 	}
 }
 

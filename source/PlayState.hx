@@ -18,6 +18,7 @@ import flixel.addons.editors.tiled.TiledObjectLayer;
 import flixel.ui.FlxBar;
 import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
+import flixel.util.FlxPath;
 using flixel.util.FlxSpriteUtil;
 
 class PlayState extends FlxState
@@ -30,13 +31,12 @@ class PlayState extends FlxState
 	private var _map:FlxTilemap;
 	private var _deco:FlxTilemap;
 	private var _bg:FlxTilemap;
- 	//private var _mWalls:FlxTilemap;
-	private var _starting:Bool = true;
-	private var _launchedSubstate:Bool = false;
+ 	
+	
 
 	//object storage
 	private var _player:Player;
-
+	private var sprite:FlxSprite;
 	// Just to prevent weirdness during level transition
 	private var _fading:Bool;
 
@@ -59,38 +59,44 @@ class PlayState extends FlxState
 		#end
 		
 		// Background
-		FlxG.state.bgColor = 0xff80e5ff;
+		FlxG.state.bgColor = 0xff372215;
 		_bg = new FlxTilemap();
-		_bg.loadMapFromCSV("assets/data/map_bg.csv", "assets/images/Sky2.png", 16, 16);
+		_bg.loadMapFromCSV("assets/data/map_bg.csv", "assets/images/sky.png", 16, 16);
 		_bg.follow();
 		//_bg.scrollFactor.x = _bg.scrollFactor.y = .5;
 		//_bg.moves = false;
 		//_bg.solid = false;
 		add(_bg);
 		
-		var sprite:FlxSprite;
+		
 		var destination:FlxPoint;
 		
-		
-
-		
-		
+		// Create the side-to-side pusher object and put it on a different path
+		sprite = new FlxSprite(4304, 1872, "assets/images/platform.png");
+		sprite.immovable = true;
+		destination = sprite.getMidpoint();
+		destination.x += 140;
+		sprite.path = new FlxPath().start([sprite.getMidpoint(), destination], 40, FlxPath.YOYO);
+		add(sprite);
 		
 		//room structures
 		//hometown
-		_map = new FlxTilemap();
-		_map.loadMapFromCSV("assets/data/map.csv", "assets/images/tiles.png", 16, 16);
-		_map.follow();
-		add(_map);
 		_deco = new FlxTilemap();
 		_deco.loadMapFromCSV("assets/data/map_deco.csv", "assets/images/tile2.png", 16, 16);
 		_deco.follow();
 		add(_deco);
-
+		_map = new FlxTilemap();
+		_map.loadMapFromCSV("assets/data/map.csv", "assets/images/tiles.png", 16, 16);
+		_map.follow();
+		add(_map);
 		//Set up objects
 		_hud = new FlxSpriteGroup();
-
+		_healthBar = new FlxBar(2, 2, FlxBarFillDirection.LEFT_TO_RIGHT, 90, 6, _player, "health", 0, 10, true);
+		_healthBar.createGradientBar([0xcc111111], [0xffff0000, 0xff00ff00], 2, 0, true, 0xcc333333);
+		_healthBar.scrollFactor.set();
+		add(_healthBar);
 		add(_hud);
+
 		_hud.forEach(function(s:FlxSprite)
 		{
 			// This makes sure the HUD does not move with the camera scroll
@@ -105,8 +111,8 @@ class PlayState extends FlxState
 
 		FlxG.camera.setScrollBoundsRect(0, 0, _map.width, _map.height);
 		FlxG.camera.follow(_player, PLATFORMER, .5); 
-		FlxG.camera.zoom = 1.2;
-		//FlxG.camera.targetOffset.set(0, )
+		FlxG.camera.zoom = 1.3;
+		FlxG.camera.targetOffset.set(0, FlxG.camera.target.height - 135);
 		//FlxG.camera.antialiasing = true;
 		
 		#if VIRTUAL_PAD
@@ -118,17 +124,7 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		FlxG.collide(_player, _map);
-
-		/*if (_starting)
-		{
-			if (!_launchedSubstate)
-			{
-				_launchedSubstate = true;
-				_starting = false;
-				FlxG.switchState(new PlayState());
-			}
-		}*/
-		
+		FlxG.collide(_player, sprite);
 		// Escape to the main menu
 		#if FLX_KEYBOARD
 		if (FlxG.keys.pressed.ESCAPE)
